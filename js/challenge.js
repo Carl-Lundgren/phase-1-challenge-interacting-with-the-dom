@@ -11,6 +11,16 @@ document.addEventListener("DOMContentLoaded", () => {
 
     const likeMap = {};
 
+    function renderLikes(){
+        const likes = document.querySelector('.likes');
+        likes.innerHTML= '';
+        for(const number in likeMap) {
+            const li = document.createElement('li');
+            li.innerText = `${number} has been liked ${likeMap[number]} time(s)`;
+            likes.append(li);
+        }
+    }
+
     const submit = document.querySelector('#comment-form');
     
 
@@ -21,21 +31,12 @@ document.addEventListener("DOMContentLoaded", () => {
     minus.addEventListener('click', (e) => {
        counter.innerHTML = seconds--;
     });
-       plus.addEventListener('click', (e) => {
-            counter.innerHTML = seconds++;
+    plus.addEventListener('click', (e) => {
+        counter.innerHTML = seconds++;
     });
     heart.addEventListener('click', (e) => {
-        const likes = document.querySelector('.likes');
-        const li = document.createElement('li');
-        if (likeMap[`${counter.innerHTML}`]){
-            likeMap[`${counter.innerHTML}`] += 1;
-            li.innerText = `${counter.innerHTML} has been liked ${likeMap[`${counter.innerHTML}`]} times`;
-            likes.append(li);
-        } else {
-            likeMap[`${counter.innerHTML}`] = 1;
-            li.innerText = `${counter.innerHTML} has been liked ${likeMap[`${counter.innerHTML}`]} time`;
-            likes.append(li);
-        }
+        likeMap[`${counter.innerHTML}`] ? likeMap[`${counter.innerHTML}`] += 1 : likeMap[`${counter.innerHTML}`] = 1;
+        renderLikes();
     });
 
     submit.addEventListener('submit', (e) => {
